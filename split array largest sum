@@ -1,0 +1,33 @@
+class Solution {
+public:
+bool possible(vector<int>& nums, int k,long long mid){
+    int n=nums.size();
+    int pages=0;
+    int splitcnt=1;
+ for(int i=0; i<n; i++){
+    if(pages+nums[i]>mid){
+        splitcnt++;
+        pages=nums[i];
+        if(splitcnt>k)return false;
+    }else{
+        pages+=nums[i];
+    }
+ }
+ return true;
+}
+    int splitArray(vector<int>& nums, int k) {
+        
+        long long low=*max_element(nums.begin(),nums.end());
+        long long high=accumulate(nums.begin(),nums.end(),0);
+        long long mid=0;
+        while(low<=high){
+            mid=low+(high-low)/2;
+            if(possible(nums,k,mid))
+            high=mid-1;
+        else{
+            low=mid+1;
+        }
+        }
+        return low;
+    }
+};
