@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int findmax(const vector<int>& p) {
+        int mx = INT_MIN;
+        for (int x : p) mx = max(mx, x);
+        return mx;
+    }
+
+   
+    long long caltotalhours(const vector<int>& p, int k, long long h_limit) {
+        long long hours = 0;
+        for (int x : p) {
+            
+            hours += ( (long long)x + k - 1 ) / k;
+            if (hours > h_limit) return hours; 
+        }
+        return hours;
+    }
+
+    int minEatingSpeed(vector<int>& p, int h) {
+        int low = 1, high = findmax(p);
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            long long need = caltotalhours(p, mid, h);
+            if (need <= h) {
+                high = mid - 1;  
+            } else {
+                low = mid + 1;  
+            }
+        }
+        return low;
+    }
+};
